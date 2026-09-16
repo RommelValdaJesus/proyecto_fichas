@@ -1,5 +1,18 @@
+import sqlite3
 class Modelo:
-
+    def __init__(self):
+        self.conexion = sqlite3.connect("clinica.db")
+        self.cursor = self.conexion.cursor()
+        self.cursor.execute("""
+            CREATE TABLE IF NOT EXISTS pacientes (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                nombre TEXT,
+                doctor TEXT,
+                area TEXT,
+                fecha TEXT
+            )
+        """)
+        self.conexion.commit()
 
     def agregar_paciente(self, nombre, doctor, area, fecha):
         self.cursor.execute("INSERT INTO pacientes (nombre, doctor, area, fecha) VALUES (?, ?, ?, ?)",
